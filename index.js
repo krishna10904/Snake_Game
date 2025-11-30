@@ -13,5 +13,17 @@ document.addEventListen('DOMContentLoaded',function(){
   let dy = 0;
   let interValidId;
   let gameSpeed = 200;
+
+  function moveFood() {
+    let newX, newY;
+
+    do {
+        newX = Math.floor(Math.random() * 30) * cellSize;
+        newY = Math.floor(Math.random() * 30) * cellSize;
+    } while(snake.some(snakeCell => snakeCell.x === newX && snakeCell.y === newY));
+
+    food = { x: newX, y: newY };
+}
+
   
 }
