@@ -42,3 +42,23 @@ document.addEventListener('DOMContentLoaded', function () {
             snake.pop(); // Remove tail
         }
     }
+  function changeDirection(e) {
+        console.log("key pressed", e);
+        const isGoingDown = dy === cellSize;
+        const isGoingUp = dy === -cellSize;
+        const isGoingRight = dx === cellSize;
+        const isGoingLeft = dx === -cellSize;
+        if(e.key === 'ArrowUp' && !isGoingDown ) {
+            dx = 0;
+            dy = -cellSize;
+        } else if(e.key === 'ArrowDown' && !isGoingUp) {
+            dx = 0;
+            dy = cellSize;
+        } else if(e.key === 'ArrowLeft' && !isGoingRight) {
+            dx = -cellSize;
+            dy = 0;
+        } else if(e.key === 'ArrowRight' && !isGoingLeft) {
+            dx = cellSize;
+            dy = 0;
+        }
+    }
