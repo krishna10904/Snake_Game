@@ -62,3 +62,10 @@ document.addEventListener('DOMContentLoaded', function () {
             dy = 0;
         }
     }
+     function drawDiv(x, y, className) {
+        const divElement = document.createElement('div');
+        divElement.classList.add(className);
+        divElement.style.top = `${y}px`;
+        divElement.style.left = `${x}px`;
+        return divElement;
+    }
