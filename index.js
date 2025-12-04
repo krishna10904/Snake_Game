@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', function () {
             snake.pop(); // Remove tail
         }
     }
-  function changeDirection(e) {
+
+    function changeDirection(e) {
         console.log("key pressed", e);
         const isGoingDown = dy === cellSize;
         const isGoingUp = dy === -cellSize;
@@ -62,10 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
             dy = 0;
         }
     }
-     function drawDiv(x, y, className) {
+
+    function drawDiv(x, y, className) {
         const divElement = document.createElement('div');
         divElement.classList.add(className);
         divElement.style.top = `${y}px`;
         divElement.style.left = `${x}px`;
         return divElement;
+    }
     }
