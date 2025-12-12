@@ -71,4 +71,84 @@ document.addEventListener('DOMContentLoaded', function () {
         divElement.style.left = `${x}px`;
         return divElement;
     }
+
+    function drawFoodAndSnake() {
+        gameArena.innerHTML = ''; // Clear the game arena
+        // wipe out everything and redraw with new positions
+
+        snake.forEach((snakeCell) => {
+            const snakeElement = drawDiv(snakeCell.x, snakeCell.y, 'snake');
+            gameArena.appendChild(snakeElement);
+        })
+
+        const foodElement = drawDiv(food.x, food.y, 'food');
+        gameArena.appendChild(foodElement);
     }
+
+    function isGameOver() {
+        // snake collision checks
+        for(let i = 1; i < snake.length; i++) {
+            if(snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+                return true;
+            }
+        }
+
+        // wall collision checks
+        const hitLeftWall = snake[0].x < 0; // snake[0] -> head
+        const hitRightWall = snake[0].x > arenaSize - cellSize;
+        const hitTopWall = snake[0].y < 0;
+        const hitBottomWall = snake[0].y > arenaSize - cellSize;
+        return hitLeftWall || hitRightWall || hitTopWall || hitBottomWall;
+    }
+
+    function gameLoop() {
+        intervalId = setInterval(() => {
+            if(isGameOver()) {
+                clearInterval(intervalId);
+                gameStarted = false;
+                alert('Game Over' + '\n' + 'Your Score: ' + score);
+                return;
+            }
+            updateSnake();
+            drawFoodAndSnake();
+            drawScoreBoard();
+        }, gameSpeed);
+    }
+
+    function runGame() {
+        if(!gameStarted) {
+            gameStarted = true;
+            document.addEventListener('keydown', changeDirection);
+            
+            gameLoop(); // TODO: Implement game loop
+        }
+    }
+
+    function drawScoreBoard() {
+        const scoreBoard = document.getElementById('score-board');
+        scoreBoard.textContent = `Score: ${score}`;
+    }
+
+    function initiateGame() {
+        const scoreBoard = document.createElement('div'); 
+        scoreBoard.id = 'score-board';
+
+        document.body.insertBefore(scoreBoard, gameArena); // Insert score board before game arena
+
+
+        const startButton = document.createElement('button');
+        startButton.textContent = 'Start Game';
+        startButton.classList.add('start-button');
+
+        startButton.addEventListener('click', function startGame() {
+            startButton.style.display = 'none'; // Hide start button
+
+            runGame();
+        });
+
+        document.body.appendChild(startButton); // Append start button to the body
+    }
+
+    initiateGame();
+    
+});
